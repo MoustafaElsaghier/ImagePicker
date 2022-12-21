@@ -11,7 +11,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val MAX_ITEMS = 5 // max number of allowed items to be selected
 
-    private val singleImagePicker by lazy {
+    private val singleImagePicker =
         registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             // Callback is invoked after the user selects a media item or closes the
             // photo picker.
@@ -21,20 +21,18 @@ class MainActivity : AppCompatActivity() {
                 binding.selectedImagesUri.text = selectedImages
             }
         }
-    }
 
-    private val multipleImagePicker by lazy {
+    private val multipleImagePicker =
         registerForActivityResult(ActivityResultContracts.PickMultipleVisualMedia(MAX_ITEMS)) { selectedUris ->
             // Callback is invoked after the user selects media items or closes the
             if (selectedUris.isNotEmpty()) {
                 val selectedImages = StringBuilder()
                 for (uri in selectedUris) {
-                    selectedImages.append(uri.toString())
+                    selectedImages.append(uri.toString()).append("\n")
                 }
                 binding.selectedImagesUri.text = selectedImages
             }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
